@@ -12,43 +12,34 @@ from __future__ import annotations
 
 
 class Node:
-    """creates a node with immutable value and link to next node
+    """Node class
     """
 
-    def __init__(self, value: any, next_node: Node = None) -> None:
+    def __init__(self, value: int | str, next_node: Node | None = None) -> None:
         """creates a node with immutable value and a link to next node
 
         Args:
-            value (any): value of the node
+            value int | str: value of the node
             next_node (Node, optional): next node that will be linked. Defaults to None
-
-        Raises:
-            Exception: if value is None
-            Exception: if next_node is not of type Node
         """
-        if value is None:
-            raise Exception('value is required')
         self.value = value
-
-        if next_node is not None and not isinstance(next_node, Node):
-            raise Exception('next_node should be of type Node')
         self.next_node = next_node
 
 
-    def get_value(self) -> any:
+    def get_value(self) -> int | str:
         """get value of current node
 
         Returns:
-          any: value of current node
+          int | str: value of current node
         """
         return self.value
 
 
-    def get_next_node(self) -> Node:
+    def get_next_node(self) -> Node | None:
         """get next linked node
 
         Returns:
-          Node: next linked node
+          Node | None: next linked node
         """
         return self.next_node
 
@@ -59,16 +50,8 @@ class Node:
         Args:
             next_node (Node): next node to be linked
 
-        Raises:
-            Exception: if next_node is not of type Node
-
         Returns:
             Node: updated next_node
         """
-        if next_node is not None:
-            return None
-
-        if isinstance(next_node, Node):
-            self.next_node = next_node
-            return self.next_node
-        raise Exception('next_node should be of type Node')
+        self.next_node = next_node
+        return self.next_node

@@ -2,10 +2,8 @@
 Node class unit tests
 
 - __init__
-    - throw exception if value is not provided
     - create node with value
     - next node is None if no value is provided
-    - throw exception if next node is not of type Node
     - next node is set to given node
 
 - get_value
@@ -16,8 +14,6 @@ Node class unit tests
     - return next node if node is present
 
 - set_next_node
-    - return None if node is not provided
-    - throw exception if next node is not of type Node
     - set next node to given node
     - return given node
 
@@ -28,13 +24,10 @@ from node import Node
 
 
 class TestNode(unittest.TestCase):
-    
+    """
+    Testing class for Node class
+    """
     # __init__()
-
-    def test_throw_error_if_no_value(self):
-        """throw exception if value is not provided
-        """
-        self.assertRaises(Exception, Node, None)
 
     def test_create_node_with_value(self):
         """create node with value
@@ -48,11 +41,6 @@ class TestNode(unittest.TestCase):
         """
         node = Node(value=123)
         self.assertEqual(node.next_node, None)
-
-    def test_next_node_not_type_node(self):
-        """throw exception if next node is not of type Node
-        """
-        self.assertRaises(Exception, Node, 123, "abc")
 
     def test_given_next_node(self):
         """next node is set to given node
@@ -89,19 +77,6 @@ class TestNode(unittest.TestCase):
 
 
     # set_next_node()
-
-    def test_set_next_node_none(self):
-        """return None if node is not provided
-        """
-        node = Node(value=1)
-        result = node.set_next_node(next_node=None)
-        self.assertEqual(result, None)
-
-    def test_set_next_node_not_type_node(self):
-        """throw exception if next node is not of type Node
-        """
-        node = Node(value=1)
-        self.assertRaises(Exception, node.set_next_node, 123)
 
     def test_set_next_node(self):
         """set next node to given node
