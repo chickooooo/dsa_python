@@ -30,6 +30,29 @@ LinkedList class unit tests
     - else remove node with given value from the list
     - return removed node
 
+- get_length
+    - return 0 if no items
+    - return number of items
+
+- node_present
+    - return False if list is empty
+    - return False if node not found
+    - return True if node found
+
+- access_node_by_index
+    - return None if list is empty
+    - return None if index out of range
+    - return node at index
+    - return None if negative index out of range
+    - return node from tail if negative index
+
+- update_at_index
+    - return None if list is empty
+    - return None if index out of range
+    - return updated node
+    - return None if negative index out of range
+    - return updated node from tail if negative index
+
 """
 
 from node import Node
@@ -189,7 +212,7 @@ def test_return_in_list_form() -> None:
     linked_list.append_node(value_2)
     linked_list.append_node(value_3)
     # act
-    result: list[str] | list[int] = linked_list.as_list()
+    result: list[str | int] = linked_list.as_list()
     # assert
     assert result == [10, 20, 30]
 
@@ -254,3 +277,172 @@ def test_return_removed_node() -> None:
     if result is None:
         raise Exception('returned node is none')
     assert result.get_value() == value_2
+
+
+# get_length()
+
+def test_0_length() -> None:
+    """return 0 if no items
+    """
+    linked_list: LinkedList = LinkedList()
+    result: int = linked_list.get_length()
+    assert result == 0
+
+def test_get_length() -> None:
+    """return number of items
+    """
+    linked_list: LinkedList = LinkedList()
+    for i in range(10):
+        linked_list.append_node(i)
+    result: int = linked_list.get_length()
+    assert result == 10
+
+
+# node_present()
+
+def test_node_present_empty() -> None:
+    """return False if list is empty
+    """
+    linked_list: LinkedList = LinkedList()
+    result: bool = linked_list.node_present("abc")
+    assert result is False
+
+def test_node_present_false() -> None:
+    """return False if node found
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: bool = linked_list.node_present("c")
+    assert result is False
+
+def test_node_present_true() -> None:
+    """return True if node not found
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: bool = linked_list.node_present("b")
+    assert result is True
+
+
+# access_node_by_index()
+
+def test_access_node_empty() -> None:
+    """return None if list is empty
+    """
+    linked_list: LinkedList = LinkedList()
+    result: Node | None = linked_list.access_node_by_index(4)
+    assert result is None
+
+def test_access_node_out_of_range() -> None:
+    """return None if index out of range
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.access_node_by_index(4)
+    assert result is None
+
+def test_access_node_by_index() -> None:
+    """return node at index
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.access_node_by_index(1)
+    assert isinstance(result, Node)
+    assert result.get_value() == value_2
+    result: Node | None = linked_list.access_node_by_index(0)
+    assert isinstance(result, Node)
+    assert result.get_value() == value_1
+
+def test_access_node_out_of_range_negative() -> None:
+    """return None if index out of range
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.access_node_by_index(-3)
+    assert result is None
+
+def test_access_node_by_index_negative() -> None:
+    """return node from tail if negative index
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.access_node_by_index(-1)
+    assert isinstance(result, Node)
+    assert result.get_value() == value_2
+    result: Node | None = linked_list.access_node_by_index(-2)
+    assert isinstance(result, Node)
+    assert result.get_value() == value_1
+
+
+# update_node_at_index()
+
+def test_update_node_empty() -> None:
+    """return None if list is empty
+    """
+    linked_list: LinkedList = LinkedList()
+    result: Node | None = linked_list.update_at_index(4, 'abc')
+    assert result is None
+
+def test_update_node_out_of_range() -> None:
+    """return None if index out of range
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.update_at_index(4, 'abc')
+    assert result is None
+
+def test_update_node_at_index() -> None:
+    """return updated node
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.update_at_index(1, 'B')
+    assert isinstance(result, Node)
+    assert result.get_value() == 'B'
+    assert linked_list.as_list() == ['a', 'B']
+    result: Node | None = linked_list.update_at_index(0, 'A')
+    assert isinstance(result, Node)
+    assert result.get_value() == "A"
+    assert linked_list.as_list() == ['A', 'B']
+
+def test_update_node_out_of_range_negative() -> None:
+    """return None if index out of range
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.access_node_by_index(-3)
+    assert result is None
+
+def test_update_node_by_index_negative() -> None:
+    """return updated node from tail if negative index
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.update_at_index(-1, 'B')
+    assert isinstance(result, Node)
+    assert result.get_value() == 'B'
+    assert linked_list.as_list() == ['a', 'B']
+    result: Node | None = linked_list.update_at_index(-2, 'A')
+    assert isinstance(result, Node)
+    assert result.get_value() == "A"
+    assert linked_list.as_list() == ['A', 'B']
