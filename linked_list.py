@@ -187,3 +187,107 @@ class LinkedList:
             previous_node = current_node
             current_node = current_node.get_next_node()
         return None
+
+    # refactoring required
+    def swap_nodes(self, value_1: str | int, value_2: str | int) -> bool:
+        """swap nodes with given value from the list
+
+        Args:
+            value_1 (str | int): value of node 1
+            value_2 (str | int): value of node 2
+
+        Returns:
+            bool: returns True on successful swap else False
+        """
+
+        def swap_adjacent_head_nodes(previous: Node, next_node: Node) -> None:
+            previous.set_next_node(next_node.get_next_node())
+            next_node.set_next_node(previous)
+            self.head_node = next_node
+
+        def swap_adjacent_nodes(p_1: Node, c_1: Node, p_2: Node) -> None:
+            temp = p_2.get_next_node()
+            p_2.set_next_node(c_1)
+            p_1.set_next_node(p_2)
+            c_1.set_next_node(temp)
+
+        def swap_non_adjacent_head_nodes(c_1: Node, p_2: Node, c_2: Node) -> None:
+            temp: Node | None = c_2.get_next_node()
+            c_2.set_next_node(c_1.get_next_node())
+            self.head_node = c_2
+            c_1.set_next_node(temp)
+            p_2.set_next_node(c_1)
+
+        def swap_non_adjacent_nodes(p_1: Node, c_1: Node, p_2: Node, c_2: Node) -> None:
+            temp: Node | None = c_2.get_next_node()
+            c_2.set_next_node(c_1.get_next_node())
+            p_1.set_next_node(c_2)
+            c_1.set_next_node(temp)
+            p_2.set_next_node(c_1)
+
+        def one_head_node(is_value_1: bool, head_node: Node) -> bool:
+            curr_node_1: Node | None = None
+            pre_node_2: Node | None = None
+            curr_node_2: Node | None = None
+            second_value: str | int = value_2 if is_value_1 else value_1
+            curr_node_1 = head_node
+            pre_node_2 = curr_node_1.get_next_node()
+            # only 1 element list
+            if pre_node_2 is None:
+                return False
+            if pre_node_2.get_value() == second_value:
+                # adjacent nodes
+                swap_adjacent_head_nodes(curr_node_1, pre_node_2)
+                return True
+            curr_node_2 = pre_node_2.get_next_node()
+            while curr_node_2:
+                if curr_node_2.get_value() == second_value:
+                    break
+                pre_node_2 = curr_node_2
+                curr_node_2 = curr_node_2.get_next_node()
+            if curr_node_2 is None:
+                return False
+            swap_non_adjacent_head_nodes(curr_node_1, pre_node_2, curr_node_2)
+            return True
+
+        def no_head_node(head_node: Node) -> bool:
+            p_1 = head_node
+            c_1 = head_node.get_next_node()
+            while c_1:
+                if c_1.get_value() in (value_1, value_2):
+                    second_value = value_2 if c_1.get_value() == value_1 else value_1
+                    p_2 = c_1.get_next_node()
+                    # only 1 element list
+                    if p_2 is None:
+                        return False
+                    if p_2.get_value() == second_value:
+                        # adjacent nodes
+                        swap_adjacent_nodes(p_1, c_1, p_2)
+                        return True
+                    c_2 = p_2.get_next_node()
+                    while c_2:
+                        if c_2.get_value() == second_value:
+                            break
+                        p_2 = c_2
+                        c_2 = c_2.get_next_node()
+                    if c_2 is None:
+                        return False
+                    swap_non_adjacent_nodes(p_1, c_1, p_2, c_2)
+                    return True
+                p_1 = c_1
+                c_1 = c_1.get_next_node()
+            if c_1 is None:
+                return False
+            return False
+
+        head_node = self.head_node
+        if head_node is None:
+            return False
+        if value_1 == value_2:
+            return False
+        if value_1 == head_node.get_value():
+            return one_head_node(True, head_node)
+        if value_2 == head_node.get_value():
+            return one_head_node(False, head_node)
+        # no head node
+        return no_head_node(head_node)

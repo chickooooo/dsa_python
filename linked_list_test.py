@@ -53,6 +53,14 @@ LinkedList class unit tests
     - return None if negative index out of range
     - return updated node from tail if negative index
 
+- swap_nodes
+    - return False if list is empty
+    - return False if same values
+    - return False if either of the value is not present in the list
+    - return True when swapping with head node
+    - return True when swapping with non head node
+
+
 """
 
 from node import Node
@@ -115,11 +123,9 @@ def test_link_old_head_to_new_head() -> None:
     linked_list: LinkedList = LinkedList(value_1)
     linked_list.add_new_head(value_2)
     head_node = linked_list.head_node
-    if head_node is None:
-        raise Exception('head_node is none')
+    assert isinstance(head_node, Node)
     next_node = head_node.next_node
-    if next_node is None:
-        raise Exception('next_node of head_node is none')
+    assert isinstance(next_node, Node)
     assert next_node.get_value() == value_1
 
 def test_link_none_to_new_head() -> None:
@@ -129,8 +135,7 @@ def test_link_none_to_new_head() -> None:
     linked_list: LinkedList = LinkedList()
     linked_list.add_new_head(value_2)
     head_node = linked_list.head_node
-    if head_node is None:
-        raise Exception('head_node is none')
+    assert isinstance(head_node, Node)
     assert head_node.get_next_node() is None
 
 def test_return_new_head_node() -> None:
@@ -143,8 +148,7 @@ def test_return_new_head_node() -> None:
     assert isinstance(result, Node)
     assert result.get_value() == value_2
     result_next_node = result.get_next_node()
-    if result_next_node is None:
-        raise Exception('next_node of head_node is none')
+    assert isinstance(result_next_node, Node)
     assert result_next_node.get_value() == value_1
 
 
@@ -157,8 +161,7 @@ def test_append_as_head_node() -> None:
     linked_list: LinkedList = LinkedList()
     linked_list.append_node(value_1)
     head_node = linked_list.head_node
-    if head_node is None:
-        raise Exception('head_node is none')
+    assert isinstance(head_node, Node)
     assert head_node.get_value() == value_1
 
 def test_append_node() -> None:
@@ -173,17 +176,7 @@ def test_append_node() -> None:
     linked_list.append_node(value_2)
     linked_list.append_node(value_3)
     # assert
-    previous_node = linked_list.get_head_node()
-    if previous_node is None:
-        raise Exception('head_node is None')
-    # head node
-    assert previous_node.get_value() == value_1
-    current_node = previous_node.get_next_node()
-    while current_node:
-        previous_node = current_node
-        current_node = current_node.get_next_node()
-    # tail node
-    assert previous_node.get_value() == value_3
+    assert linked_list.as_list() == [10, 20, 30]
 
 def test_return_appended_node() -> None:
     """return appended node
@@ -248,8 +241,7 @@ def test_remove_head_node() -> None:
     linked_list.remove_node(value_1)
     result = linked_list.as_list()
     head_node = linked_list.head_node
-    if head_node is None:
-        raise Exception("head node is none")
+    assert isinstance(head_node, Node)
     assert head_node.get_value() == value_2
     assert result == ['b', 'c']
 
@@ -274,8 +266,7 @@ def test_return_removed_node() -> None:
     linked_list: LinkedList = LinkedList(value_1)
     linked_list.append_node(value_2)
     result: Node | None = linked_list.remove_node(value_2)
-    if result is None:
-        raise Exception('returned node is none')
+    assert isinstance(result, Node)
     assert result.get_value() == value_2
 
 
@@ -446,3 +437,83 @@ def test_update_node_by_index_negative() -> None:
     assert isinstance(result, Node)
     assert result.get_value() == "A"
     assert linked_list.as_list() == ['A', 'B']
+
+
+# update_node_at_index()
+
+def test_swap_nodes_empty() -> None:
+    """return False if list is empty
+    """
+    linked_list: LinkedList = LinkedList()
+    result: bool = linked_list.swap_nodes(4, 1)
+    assert result is False
+
+def test_swap_nodes_same() -> None:
+    """return False if same values
+    """
+    linked_list: LinkedList = LinkedList()
+    for i in range(10):
+        linked_list.append_node(i)
+    result: bool = linked_list.swap_nodes(4, 4)
+    assert result is False
+
+def test_swap_nodes_no_value() -> None:
+    """return False if either of the value is not present in the list
+    """
+    linked_list: LinkedList = LinkedList()
+    for i in range(10):
+        linked_list.append_node(i)
+    result: bool = linked_list.swap_nodes(10, 0)
+    assert result is False
+    result: bool = linked_list.swap_nodes(4, 15)
+    assert result is False
+
+def test_swap_nodes_one_head() -> None:
+    """return True when swapping with head node
+    """
+    linked_list: LinkedList = LinkedList()
+    for i in range(10):
+        linked_list.append_node(i)
+    # first and middle
+    result: bool = linked_list.swap_nodes(0, 8)
+    assert result is True
+    assert linked_list.as_list() == [8, 1, 2, 3, 4, 5, 6, 7, 0, 9]
+    # first and adjacent
+    result: bool = linked_list.swap_nodes(8, 1)
+    assert result is True
+    assert linked_list.as_list() == [1, 8, 2, 3, 4, 5, 6, 7, 0, 9]
+    # middle and first
+    result: bool = linked_list.swap_nodes(3, 1)
+    assert result is True
+    assert linked_list.as_list() == [3, 8, 2, 1, 4, 5, 6, 7, 0, 9]
+    # last and first
+    result: bool = linked_list.swap_nodes(3, 9)
+    assert result is True
+    assert linked_list.as_list() == [9, 8, 2, 1, 4, 5, 6, 7, 0, 3]
+    # adjacent and first
+    result: bool = linked_list.swap_nodes(8, 9)
+    assert result is True
+    assert linked_list.as_list() == [8, 9, 2, 1, 4, 5, 6, 7, 0, 3]
+
+def test_swap_nodes_non_head() -> None:
+    """return True when swapping with head node
+    """
+    linked_list: LinkedList = LinkedList()
+    for i in range(10):
+        linked_list.append_node(i)
+    # case 1
+    result: bool = linked_list.swap_nodes(3, 8)
+    assert result is True
+    assert linked_list.as_list() == [0, 1, 2, 8, 4, 5, 6, 7, 3, 9]
+    # case 2
+    result: bool = linked_list.swap_nodes(4, 5)
+    assert result is True
+    assert linked_list.as_list() == [0, 1, 2, 8, 5, 4, 6, 7, 3, 9]
+    # case 3
+    result: bool = linked_list.swap_nodes(7, 2)
+    assert result is True
+    assert linked_list.as_list() == [0, 1, 7, 8, 5, 4, 6, 2, 3, 9]
+    # case 4
+    result: bool = linked_list.swap_nodes(6, 4)
+    assert result is True
+    assert linked_list.as_list() == [0, 1, 7, 8, 5, 6, 4, 2, 3, 9]
