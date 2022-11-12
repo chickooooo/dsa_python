@@ -44,14 +44,14 @@ class Node:
         return self.next_node
 
 
-    def set_next_node(self, next_node: Node) -> Node:
+    def set_next_node(self, next_node: Node | None) -> Node | None:
         """update value of next_node
 
         Args:
-            next_node (Node): next node to be linked
+            next_node (Node | None): next node to be linked
 
         Returns:
-            Node: updated next_node
+            Node | None: updated next_node
         """
         self.next_node = next_node
         return self.next_node

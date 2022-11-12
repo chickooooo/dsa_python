@@ -69,6 +69,39 @@ class LinkedList:
         current_node = previous_node.get_next_node()
         while current_node:
             previous_node = current_node
-            current_node = current_node.get_next_node()        
+            current_node = current_node.get_next_node()
         previous_node.set_next_node(new_node)
         return new_node
+
+    def as_list(self) -> list[str] | list[int]:
+        """return linked list in form of list
+
+        Returns:
+            list[str] | list[int]: list of str of list of int. Depending on dtype of value
+        """
+        int_list: list[int] = []
+        str_list: list[str] = []
+        current_node = self.head_node
+        while current_node:
+            value: int | str = current_node.get_value()
+            if isinstance(value, str):
+                str_list.append(value)
+            else:
+                int_list.append(value)
+            current_node = current_node.get_next_node()
+        return int_list if len(int_list) != 0 else str_list
+
+    def remove_node(self, value: str | int) -> Node | None:
+        previous_node = self.head_node
+        if previous_node is None:
+            return None
+        if previous_node.get_value() == value:
+            self.head_node = previous_node.get_next_node()
+            return previous_node
+        current_node = previous_node.get_next_node()
+        while current_node:
+            if current_node.get_value() == value:
+                previous_node.set_next_node(current_node.get_next_node())
+                return current_node
+            current_node = current_node.get_next_node()
+        return None

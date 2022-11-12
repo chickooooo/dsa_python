@@ -14,6 +14,7 @@ Node class unit tests
     - return next node if node is present
 
 - set_next_node
+    - set next node to none
     - set next node to given node
     - return given node
 
@@ -71,6 +72,14 @@ def test_get_next_node():
 
 
 # set_next_node()
+
+def test_set_next_node_none():
+    """set next node to given node
+    """
+    node_1 = Node(value=1)
+    node_2 = None
+    node_1.set_next_node(next_node=node_2)
+    assert node_1.next_node is None
 
 def test_set_next_node():
     """set next node to given node

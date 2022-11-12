@@ -20,6 +20,16 @@ LinkedList class unit tests
     - append node from given_value at the end of linked list
     - return newly added node
 
+- as_list
+    - return linked list in form of python list
+
+- remove_node
+    - return None if list is empty
+    - return None if node with given value not found
+    - if node to remove is head node, replace head node
+    - else remove node with given value from the list
+    - return removed node
+
 """
 
 from node import Node
@@ -164,3 +174,83 @@ def test_return_appended_node() -> None:
     assert isinstance(result, Node)
     assert result.get_value() == value_2
     assert result.get_next_node() is None
+
+
+# as_list()
+
+def test_return_in_list_form() -> None:
+    """return linked list in form of python list
+    """
+    # arrange
+    value_1: int = 10
+    value_2: int = 20
+    value_3: int = 30
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    linked_list.append_node(value_3)
+    # act
+    result: list[str] | list[int] = linked_list.as_list()
+    # assert
+    assert result == [10, 20, 30]
+
+
+# remove_node()
+
+def test_none_if_empty_list() -> None:
+    """return None if list is empty
+    """
+    linked_list: LinkedList = LinkedList()
+    result: Node | None = linked_list.remove_node("abc")
+    assert result is None
+
+def test_none_if_not_found() -> None:
+    """return None if node with given value not found
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.remove_node("c")
+    assert result is None
+
+def test_remove_head_node() -> None:
+    """remove node with given value from the list
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    value_3: str = 'c'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    linked_list.append_node(value_3)
+    linked_list.remove_node(value_1)
+    result = linked_list.as_list()
+    head_node = linked_list.head_node
+    if head_node is None:
+        raise Exception("head node is none")
+    assert head_node.get_value() == value_2
+    assert result == ['b', 'c']
+
+def test_remove_node() -> None:
+    """remove node with given value from the list
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    value_3: str = 'c'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    linked_list.append_node(value_3)
+    linked_list.remove_node(value_2)
+    result = linked_list.as_list()
+    assert result == ['a', 'c']
+
+def test_return_removed_node() -> None:
+    """remove node with given value from the list
+    """
+    value_1: str = 'a'
+    value_2: str = 'b'
+    linked_list: LinkedList = LinkedList(value_1)
+    linked_list.append_node(value_2)
+    result: Node | None = linked_list.remove_node(value_2)
+    if result is None:
+        raise Exception('returned node is none')
+    assert result.get_value() == value_2
