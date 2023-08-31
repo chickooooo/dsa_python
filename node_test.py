@@ -74,7 +74,7 @@ def test_get_next_node():
 # set_next_node()
 
 def test_set_next_node_none():
-    """set next node to given node
+    """set next node to none
     """
     node_1 = Node(value=1)
     node_2 = None
