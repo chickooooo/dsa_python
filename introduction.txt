@@ -1,0 +1,47 @@
+What is an algorithm?
+    - an algorithm is a set of well defined instructions used to solve a problem
+
+Qualities of a good algorithm:
+    - input and output should be precisely defined
+    - each step in an algorithm should be clear & unambiguous
+    - it should be the most efficient solution for the problem
+    - it should not include computer code
+    - it should be programming language independent
+
+Example: algorithm to add two numbers
+
+step 1: start
+step 2: declare variables n1, n2 and sum
+step 3: read values n1 and n2
+step 4: add n1, n2 and assign the result to sum
+step 5: display sum
+step 6: stop
+
+
+
+What are data structures?
+    - a data structure is a type of storage unit
+    - it is used to effeciently store and retrieve data from computer memory
+    - a data structure is different from a data type
+    - a data structure is a collection of data types arranged in a specific order
+    - there are 2 types of data structures:
+        -- linear data structure
+        -- non-linear data structure
+
+Linear data structure:
+    - elements are arranged in a sequence one after the other
+    - easy to implement
+    - do not scale well
+    - examples:
+        -- array
+        -- stack
+        -- queue
+        -- linked list
+
+Non-linear data structure:
+    - there is no specific sequence between the elements
+    - instead elements are arranged in a hierarchical manner,
+      where 1 element is connected to one or more elements
+    - non-linear data structures are further divided into:
+        -- tree: single parent node
+        -- graph: multiple parent nodes
