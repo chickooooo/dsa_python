@@ -1,0 +1,39 @@
+- sorting algorithms:
+    -- quick sort
+    -- merge sort
+    -- heap sort
+    -- bubble sort
+    -- insertion sort
+    -- selection sort
+
+- searching algorithms:
+    -- linear search
+    -- binary search
+    -- interpolation search
+    -- depth first search
+    -- breadth first search
+
+- graph algorithms:
+    -- dijkstra's algorithm
+    -- minimum spanning tree
+    -- bellman-ford algorithm
+    -- topological sorting
+    -- kruskal's algorithm
+    -- prim's algorithm
+
+- dynamic programing:
+    -- memoization
+    -- tabulation
+
+- tree traversal:
+    -- pre-order traversal
+    -- post-order traversal
+    -- in-order traversal
+
+
+
+Other necessaties (computer systems):
+    - computer architecture
+    - operating systems
+    - networking
+    - databases
