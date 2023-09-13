@@ -21,7 +21,7 @@ step 6: stop
 
 What are data structures?
     - a data structure is a type of storage unit
-    - it is used to effeciently store and retrieve data from computer memory
+    - it is used to efficiently store and retrieve data from computer memory
     - a data structure is different from a data type
     - a data structure is a collection of data types arranged in a specific order
     - there are 2 types of data structures:
@@ -45,3 +45,42 @@ Non-linear data structure:
     - non-linear data structures are further divided into:
         -- tree: single parent node
         -- graph: multiple parent nodes
+
+
+
+Asymptotic Notations:
+    - efficiency of an algorithm depends on the time, storage and other resource
+    required to execute the algorithm
+    - asymptotic notations are used to measure the efficiency of an algorithm
+
+    - big-O notation represents the worst case complexity of an algorithm
+    - omega notation represents the best case complexity of an algorithm
+    - theta notation represents the average case complexity of an algorithm
+
+
+
+Stack:
+    - first in last out principle
+    - basic operations:
+        -- push: add item to the top of stack
+        -- pop: remove and return item from the top of stack
+        -- peek: get top item of stack
+        -- isEmpty: check if stack is empty
+        -- isFull: check if stack is full
+    - push & pop operations of the stack take constant time O(1)
+
+
+
+Queue:
+    - first in first out principle
+    - basic operations:
+        -- enqueue: add item at the end of queue
+        -- dequeue: remove and return item from the start of queue
+        -- peek: get front-most item of queue
+        -- isEmpty: check if queue is empty
+        -- isFull: check if queue is full
+    - types of queues:
+        -- simple queue
+        -- circular queue
+        -- priority queue
+        -- double ended queue

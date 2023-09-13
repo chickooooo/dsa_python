@@ -1,7 +1,6 @@
 """
     - convert unsorted array to sorted array
     - pivot and partition
-    - divide and conquer
     - time complexity:
         -- worst case: O(n^2)
             --- worst case is when pivot is always the smallest or largest element
